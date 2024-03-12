@@ -1,11 +1,11 @@
 import sys
 import os
 
-src = sys.args[1]
+src = sys.argv[1]
 
-classMappingCSV = sys.args[2]
-fieldMappingCSV = sys.args[3]
-methodMappingCSV = sys.args[4]
+classMappingCSV = sys.argv[2]
+fieldMappingCSV = sys.argv[3]
+methodMappingCSV = sys.argv[4]
 
 classMapping = dict()
 fieldMapping = dict()
