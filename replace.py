@@ -1,6 +1,7 @@
 import sys
 import os
 import tqdm
+import re
 
 src = sys.argv[1]
 
@@ -45,9 +46,10 @@ def codeReplace(file, mapping:dict):
 	javaCode = ''
 	with open(file, 'r', encoding='utf-8') as f:
 		javaCode = f.read()
-	
+
 	for key in keys:
-		javaCode = javaCode.replace(key, mapping[key])
+		if re.match(key + r'[^0-9]', javaCode):
+			javaCode = javaCode.replace(key, mapping[key])
 	
 	with open(file, 'w', encoding='utf-8') as f:
 		f.write(javaCode)
