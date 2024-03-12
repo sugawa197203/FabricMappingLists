@@ -18,17 +18,17 @@ def initMapping(classCSV, fieldCSV, methodCSV):
 	with open(classCSV, 'r', encoding='utf-8') as file:
 		for line in file:
 			line = line.split(',')
-			classMapping[line[0]] = line[1]
+			classMapping[line[0]] = line[1].strip()
 	
 	with open(fieldCSV, 'r', encoding='utf-8') as file:
 		for line in file:
 			line = line.split(',')
-			fieldMapping[line[0]] = line[1]
+			fieldMapping[line[0]] = line[1].strip()
 	
 	with open(methodCSV, 'r', encoding='utf-8') as file:
 		for line in file:
 			line = line.split(',')
-			methodMapping[line[0]] = line[1]
+			methodMapping[line[0]] = line[1].strip()
 
 def get_files(serchDirectry, files = []):
 	for filePath in os.listdir(serchDirectry):
@@ -51,6 +51,24 @@ def codeReplace(file, mapping:dict):
 	
 	with open(file, 'w', encoding='utf-8') as f:
 		f.write(javaCode)
+
+def classReplace(file, mapping:dict):
+	keys = mapping.keys()
+	javaCode = ''
+	replacedJavaCode = ''
+	with open(file, 'r', encoding='utf-8') as f:
+		javaCode = f.read()
+
+	for line in javaCode.split('\n'):
+		for key in keys:
+			if 'import' in line:
+				line = line.replace(key, mapping[key])
+			elif key in line:
+				line = line.replace(key, mapping[key].split('.')[-1])
+		replacedJavaCode += line + '\n'
+
+	with open(file, 'w', encoding='utf-8') as f:
+		f.write(replacedJavaCode)
 
 initMapping(classMappingCSV, fieldMappingCSV, methodMappingCSV)
 javaFiles = get_files(src)
