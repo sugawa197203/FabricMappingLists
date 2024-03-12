@@ -20,12 +20,12 @@ def initMapping(classCSV, fieldCSV, methodCSV):
 		for line in file:
 			line = line.split(',')
 			classMapping[line[0]] = line[1].strip()
-	
+
 	with open(fieldCSV, 'r', encoding='utf-8') as file:
 		for line in file:
 			line = line.split(',')
 			fieldMapping[line[0]] = line[1].strip()
-	
+
 	with open(methodCSV, 'r', encoding='utf-8') as file:
 		for line in file:
 			line = line.split(',')
@@ -48,9 +48,9 @@ def codeReplace(file, mapping:dict):
 		javaCode = f.read()
 
 	for key in keys:
-		if re.match(key + r'[^0-9]', javaCode):
+		if re.search(key + r'[^0-9]', javaCode):
 			javaCode = javaCode.replace(key, mapping[key])
-	
+
 	with open(file, 'w', encoding='utf-8') as f:
 		f.write(javaCode)
 
@@ -63,12 +63,12 @@ def classReplace(file, mapping:dict):
 
 	for line in javaCode.split('\n'):
 		for key in keys:
+			pattern = key + '[^0-9]'
 			if 'import' in line:
-				if re.match(key + r'[^0-9]', javaCode):
-					javaCode = javaCode.replace(key, mapping[key])
-			elif key in line:
-				if re.match(key + r'[^0-9]', javaCode):
-					javaCode = javaCode.replace(key, mapping[key])
+				if re.search(pattern, line):
+					line = re.sub(key, mapping[key], line)
+			elif re.search(pattern, line):
+				line = re.sub(key, mapping[key].split(".")[-1], line)
 		replacedJavaCode += line + '\n'
 
 	with open(file, 'w', encoding='utf-8') as f:
@@ -81,3 +81,4 @@ for file in tqdm.tqdm(javaFiles):
 	classReplace(file, classMapping)
 	codeReplace(file, fieldMapping)
 	codeReplace(file, methodMapping)
+	break
