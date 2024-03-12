@@ -64,9 +64,11 @@ def classReplace(file, mapping:dict):
 	for line in javaCode.split('\n'):
 		for key in keys:
 			if 'import' in line:
-				line = line.replace(key, mapping[key])
+				if re.match(key + r'[^0-9]', javaCode):
+					javaCode = javaCode.replace(key, mapping[key])
 			elif key in line:
-				line = line.replace(key, mapping[key].split('.')[-1])
+				if re.match(key + r'[^0-9]', javaCode):
+					javaCode = javaCode.replace(key, mapping[key])
 		replacedJavaCode += line + '\n'
 
 	with open(file, 'w', encoding='utf-8') as f:
