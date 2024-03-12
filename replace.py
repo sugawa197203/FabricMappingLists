@@ -81,4 +81,3 @@ for file in tqdm.tqdm(javaFiles):
 	classReplace(file, classMapping)
 	codeReplace(file, fieldMapping)
 	codeReplace(file, methodMapping)
-	break
