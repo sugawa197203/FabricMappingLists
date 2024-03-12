@@ -33,7 +33,7 @@ def analysis(fileName, classMapping = classMapping, methodMapping = methodMappin
 				t = re.match(classPattern, line).group()
 				t = t.split(' ')
 				key = t[1].split('/')[-1]
-				value = t[2].split('/')[-1]
+				value = ".".join(t[2].split('/')[2:])
 				classMapping[key] = value
 				return
 			
