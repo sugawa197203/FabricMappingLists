@@ -1,5 +1,6 @@
 import sys
 import os
+import tqdm
 
 src = sys.argv[1]
 
@@ -54,7 +55,7 @@ def codeReplace(file, mapping:dict):
 initMapping(classMappingCSV, fieldMappingCSV, methodMappingCSV)
 javaFiles = get_files(src)
 
-for file in javaFiles:
+for file in tqdm.tqdm(javaFiles):
 	codeReplace(file, classMapping)
 	codeReplace(file, fieldMapping)
 	codeReplace(file, methodMapping)
