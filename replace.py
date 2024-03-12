@@ -74,6 +74,6 @@ initMapping(classMappingCSV, fieldMappingCSV, methodMappingCSV)
 javaFiles = get_files(src)
 
 for file in tqdm.tqdm(javaFiles):
-	codeReplace(file, classMapping)
+	classReplace(file, classMapping)
 	codeReplace(file, fieldMapping)
 	codeReplace(file, methodMapping)
