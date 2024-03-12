@@ -9,8 +9,8 @@ methodMapping = dict()
 fieldMapping = dict()
 
 classPattern = r'CLASS net/minecraft/class_([0-9]+) net/minecraft/(\S+)'
-fieldPattern = r'\tFIELD field_([0-9]+) (\S+)'
-methodPattern = r'\tMETHOD method_([0-9]+) (\S+)'
+fieldPattern = r'\s+FIELD field_([0-9]+).*'
+methodPattern = r'\s+METHOD method_([0-9]+).*'
 
 def get_files(serchDirectry, files = []):
 	for filePath in os.listdir(serchDirectry):
@@ -35,7 +35,6 @@ def analysis(fileName, classMapping = classMapping, methodMapping = methodMappin
 				key = t[1].split('/')[-1]
 				value = ".".join(t[2].split('/')[2:])
 				classMapping[key] = value
-				return
 			
 			if re.match(fieldPattern, line):
 				t = re.match(fieldPattern, line).group()
