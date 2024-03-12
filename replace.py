@@ -49,6 +49,7 @@ def codeReplace(file, mapping:dict):
 
 	for key in keys:
 		if re.search(key + r'[^0-9]', javaCode):
+			print(key)
 			javaCode = javaCode.replace(key, mapping[key])
 
 	with open(file, 'w', encoding='utf-8') as f:
